@@ -1,1 +1,2 @@
 *.tfstate filter=git-crypt diff=git-crypt
+support/keys/* filter=git-crypt diff=git-crypt

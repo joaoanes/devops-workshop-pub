@@ -9,7 +9,7 @@ provider "aws" {
 }
 
 variable "student_public_key" {
-  description = "Public key material"
+  description = "Public key material (looks like ssh-ed25519 AAAAC3N...)"
   type        = string
 }
 
