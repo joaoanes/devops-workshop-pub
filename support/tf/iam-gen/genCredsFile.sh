@@ -1,3 +1,3 @@
 #!/bin/bash
 
-terraform output -json student_credentials > creds.json
+terraform output -json student_credentials | jq > creds.json
