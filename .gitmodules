@@ -1,0 +1,3 @@
+[submodule "regretboard"]
+	path = regretboard
+	url = https://github.com/joaoanes/regretboard/
