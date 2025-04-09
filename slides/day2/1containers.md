@@ -123,8 +123,11 @@ RUN chmod 700 /root/.ssh && \
 ```
 
 ---
+transition: slide-up
+---
 
 # Dockerfile Commands
+
 <VClickList>
 
 - **FROM**: Sets the base image for subsequent instructions.
@@ -138,6 +141,14 @@ RUN chmod 700 /root/.ssh && \
 
 - **EXPOSE**: Informs Docker that the container listens on the specified network ports at runtime.
   - Example: `EXPOSE 80`
+
+</VClickList>
+
+---
+
+# Dockerfile Commands (cont)
+
+<VClickList>
 
 - **COPY**: Copies new files or directories from the source path and adds them to the filesystem of the container.
   - Example: `COPY . /app`

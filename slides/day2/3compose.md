@@ -190,7 +190,7 @@ services:
 - Use the `postgres:latest` image.
 - Set environment variables for `POSTGRES_USER`, `POSTGRES_PASSWORD`, and `POSTGRES_DB`.
 - We can check in the code that the app has default username/passwords it expects. Let's set them in the database container
-
+````md magic-move
 ```yaml
   db:
     image: postgres:latest
@@ -198,8 +198,24 @@ services:
       POSTGRES_USER: regretadmin
       POSTGRES_PASSWORD: neveragain
       POSTGRES_DB: regrets
+    volumes:
+      - pgdata:/var/lib/regretsboard/data
 ```
 
+```yaml {1-3,10-11}
+  # We're setting a custom volume here
+  # This way the container will actually save all data
+  # In our filesystem, under /var/lib/regretsboard/data (could be anywhere else)
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: regretadmin
+      POSTGRES_PASSWORD: neveragain
+      POSTGRES_DB: regrets
+    volumes:
+      - pgdata:/var/lib/regretsboard/data
+```
+````
 ---
 
 ## Step 3: Write the Database Initialization Script
@@ -326,16 +342,13 @@ services:
 
 - Start the services defined in your `docker-compose.yml` file and verify that the application is running correctly.
 
+---
+
+
 ## Instructions
 
 1. **Start the Services:**
-   - Run the following command to start all services in detached mode:
-     ```bash
-     docker-compose up -d
-     ```
-- **Expected Output:**
-  - When you run the `docker-compose up -d` command, you should see output similar to the following, indicating that the containers have been created and are running:
-
+   - Run the following command to start all services (in detached mode):
 ````md magic-move
 ```bash
 docker-compose up -d
@@ -344,24 +357,63 @@ docker-compose up -d
 ```bash
 docker-compose up -d
 [+] Running 2/0
- ✔ Container regret-board-db-1   Created
- ✔ Container regret-board-app-1  Created
-Attaching to app-1, db-1
+ ✔ Container regret-board-db-1   Started
+ ✔ Container regret-board-app-1  Started
+
 ```
 ````
 
-2. **Verify the Application:**
+---
+
+2. **Check it's working**
+
    - Open a web browser and navigate to `http://localhost:80/regrets`.
    - You should see the application interface, confirming that the app is running and connected to the database.
 
+---
+
 3. **Check Logs:**
-   - Use the following command to view the logs and ensure there are no errors:
+   - Use the following command to view the logs and ensure there are no errors (or check if there are any):
      ```bash
      docker-compose logs -f
      ```
 
-4. **Stop the Services:**
-   - Once verified, stop the services using:
-     ```bash
-     docker-compose down
-     ```
+---
+
+4. **Check stats:**
+   - Let's have a look at the container statistics:
+
+````md magic-move
+```bash
+docker-compose stats
+```
+
+```bash
+docker-compose stats
+
+CONTAINER ID   NAME                CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O       PIDS
+ffbc446bedf4   egret-board-db-1    13.05%    16.12MiB / 1.902GiB   0.83%     18.3kB / 15.3kB   324kB / 253kB   16
+982d4873ae45   egret-board-app-1   102.26%   181.8MiB / 1.902GiB   9.33%     16.6kB / 17.1kB   8MB / 41kB      43
+```
+````
+
+---
+
+5. **Stop the Services:**
+   - Once verified, stop the services:
+
+````md magic-move
+```bash
+docker-compose down
+```
+
+```bash
+docker-compose down
+[+] Running 3/2
+ ✔ Container regret-board-app-1  Removed
+ ✔ Container regret-board-db-1   Removed
+ ✔ Network regret-board_default  Removed
+
+```
+````
+- This frees up resources. Since our database is saved on your disk, it'll persist data - otherwise it'd be removed, and you'd start from scratch.

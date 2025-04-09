@@ -28,16 +28,7 @@ src: ./day1/5terraform.md
 ---
 
 ---
-
-# Next: Bring Infra and App Together
-<VClickList>
-
-- Use Terraform to provision
-- Use Docker to deploy
-- Tie into CI/CD for automation
-
-</VClickList>
-
+layout: center
 ---
 
 # Day 1 Recap
@@ -50,6 +41,18 @@ You now:
 - Understand DevOps
 - Created and accessed an EC2
 - Launched infra using code
+
+</VClickList>
+---
+layout: center
+---
+
+# Next: Bring Infra and App Together
+<VClickList>
+
+- Use Terraform to provision
+- Use Docker to deploy
+- Tie into CI/CD for automation
 
 </VClickList>
 
@@ -67,8 +70,6 @@ src: ./day2/2exercisecontainer.md
 
 ---
 src: ./day2/3compose.md
----
-
 ---
 
 ---
@@ -94,17 +95,12 @@ src: ./day2/4ci.md
 
 # Final thoughts
 
+- **DevOps is leverage.** Full stack developers who understand it can ship, run, and maintain their work without waiting on someone else.
 
-# The Importance for Full Stack Developers
+- **Config via env vars** means ops can tweak behavior without touching code. Clean separation. Zero surprises.
 
-- **Holistic Understanding:** Knowing DevOps practices allows full stack developers to seamlessly integrate development and operations, enhancing their ability to single-handedly develop, deploy, and maintain applications.
+- **Infra as code, containers, CI/CD**—these aren’t buzzwords. They’re how you keep things fast, portable, and resilient.
 
-- **Facilitating Processes:** By using environment variables for configuration, developers enable easy tuning and adjustments by DevOps and operations teams, ensuring smoother transitions between environments.
+- **Shared tools = shared language.** Knowing the stack end-to-end makes collaboration smoother and less error-prone.
 
-- **Efficiency and Flexibility:** Understanding infrastructure as code, containerization, and CI/CD pipelines empowers developers to create more efficient, scalable, and flexible applications.
-
-- **Collaboration and Communication:** Familiarity with these tools and practices improves collaboration with DevOps teams, leading to more cohesive and effective project outcomes.
-
-- **Future-Proofing Skills:** As the industry increasingly moves towards DevOps practices, having these skills ensures developers remain relevant and competitive in the job market.
-
-
+- **It’s where things are headed.** Devs who ignore this stuff get left behind.

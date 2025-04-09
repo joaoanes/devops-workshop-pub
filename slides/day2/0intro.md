@@ -7,6 +7,8 @@
 
 </VClickList>
 
+---
+
 # Understanding Provisioners
 <VClickList>
 
@@ -16,6 +18,7 @@
 - Our needs are simple, so we just use a remote-exec provisioner in terraform.
 - It just runs commands in sequence.
 </VClickList>
+
 ---
 
 # Here's what it could be like
@@ -53,24 +56,3 @@ resource "aws_instance" "example" {
 </VClickList>
 
 ---
-# Containers & Docker
-<VClickList>
-
-- What is a container?
-- Dockerfile → Image → Container
-- Build RegretBoard as a container
-
-</VClickList>
-
----
-
-# Understanding Containers
-<VClickList>
-
-- **Containers**: Lightweight, portable, and self-sufficient units that run software.
-- Containers encapsulate an application and its dependencies, ensuring consistency across environments.
-- **Docker Images**: Like ISOs for games, they contain everything needed to run an application.
-- **Dockerfiles**: Descriptive scripts that define how to build a Docker image.
-- Dockerfiles specify the base image, application code, dependencies, and commands to run.
-
-</VClickList>

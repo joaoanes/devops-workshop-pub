@@ -64,7 +64,7 @@ scp docker-compose.yml user@server:/home/ubuntu
 
 # Confirm it works
 
-- Using chrome, go to http://<server ip>/regrets, and check it out!
+- Using chrome, go to http://[server ip]/regrets, and check it out!
 
 ## Troubleshooting
 
@@ -211,6 +211,7 @@ This setup ensures that sensitive information is not exposed in your codebase.
 
 ---
 
+
 # Understanding deploy.yml
 
 ## Workflow Overview
@@ -226,158 +227,487 @@ on:
 - **Name:** The workflow is named "Deploy RegretBoard".
 - **Trigger:** It runs on pushes to the `spoilers` branch.
 
-## Build Job
-
-```yaml
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - name: Build Docker image
-        run: docker build -t regretboard:latest .
-```
-
-- **Runs On:** The job runs on the latest Ubuntu environment.
-- **Steps:** It checks out the code, sets up Docker Buildx, and builds the Docker image.
-
-## Copy Job
-
-```yaml
-  copy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Download image artifact
-        uses: actions/download-artifact@v4
-      - name: Copy image to server
-        uses: appleboy/scp-action@v0.1.4
-```
-
-- **Dependencies:** This job depends on the `build` job.
-- **Steps:** It downloads the Docker image artifact and copies it to the server.
-
-## Deploy Job
-
-```yaml
-  deploy:
-    runs-on: ubuntu-latest
-    needs: copy
-    steps:
-      - name: SSH and deploy
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          script: |
-            docker load < regretboard.tar.gz
-            docker-compose down
-            docker-compose up -d
-```
-
-- **Dependencies:** This job depends on the `copy` job.
-- **Steps:** It SSHs into the server, loads the Docker image, and restarts the services using Docker Compose.
+--- 
 
 ## Detailed Analysis of deploy.yml
 
 ````md magic-move
-```yaml {all}
-name: Deploy RegretBoard
-
-on:
-  push:
-    branches: [spoilers]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - name: Build Docker image
-        run: docker build -t regretboard:latest .
-  copy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Download image artifact
-        uses: actions/download-artifact@v4
-      - name: Copy image to server
-        uses: appleboy/scp-action@v0.1.4
-  deploy:
-    runs-on: ubuntu-latest
-    needs: copy
-    steps:
-      - name: SSH and deploy
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          script: |
-            docker load < regretboard.tar.gz
-            docker-compose down
-            docker-compose up -d
-```
-```yaml {1-3}
+```yaml {1,1-3}
 # Workflow Name and Trigger
 name: Deploy RegretBoard
 
 on:
   push:
     branches: [spoilers]
-```
-```yaml {5-7}
-# Build Job Setup
+
 jobs:
   build:
     runs-on: ubuntu-latest
-```
-```yaml {8-12}
-# Build Job Steps
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-```
-```yaml {13-14}
-# Docker Image Build
       - name: Build Docker image
         run: docker build -t regretboard:latest .
+      - name: Upload Docker image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: regretboard-image
+          path: regretboard.tar.gz
 ```
-```yaml {15-17}
+```yaml {1,5-7}
+# Build Job Setup
+name: Deploy RegretBoard
+
+on:
+  push:
+    branches: [spoilers]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build Docker image
+        run: docker build -t regretboard:latest .
+      - name: Upload Docker image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: regretboard-image
+          path: regretboard.tar.gz
+```
+```yaml {1,12-15}
+# Checkout and setup docker (we need it in github actions)
+name: Deploy RegretBoard
+
+on:
+  push:
+    branches: [spoilers]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build Docker image
+        run: docker build -t regretboard:latest .
+      - name: Upload Docker image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: regretboard-image
+          path: regretboard.tar.gz
+```
+```yaml {1,16-17}
+# Actually build docker
+name: Deploy RegretBoard
+
+on:
+  push:
+    branches: [spoilers]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build Docker image
+        run: docker build -t regretboard:latest .
+      - name: Upload Docker image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: regretboard-image
+          path: regretboard.tar.gz
+```
+```yaml {1,18-22}
+# Upload built image to the next stage (not the server yet!)
+name: Deploy RegretBoard
+
+on:
+  push:
+    branches: [spoilers]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build Docker image
+        run: docker build -t regretboard:latest .
+      - name: Upload Docker image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: regretboard-image
+          path: regretboard.tar.gz
+```
+```yaml {1,11-12}
 # Copy Job Setup
+name: Deploy RegretBoard
+
+on:
+  push:
+    branches: [spoilers]
+
+jobs:
+  build:
   copy:
     runs-on: ubuntu-latest
     needs: build
-```
-```yaml {18-21}
-# Copy Job Steps
+    env:
+      IMAGE_NAME: regretboard:latest
+      REMOTE_USER: ubuntu
+      REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+      SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
     steps:
       - name: Download image artifact
         uses: actions/download-artifact@v4
-```
-```yaml {22-23}
-# Copy Image to Server
+        with:
+          name: regretboard-image
       - name: Copy image to server
         uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ env.REMOTE_HOST }}
+          username: ${{ env.REMOTE_USER }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          source: regretboard.tar.gz
+          target: /home/ubuntu/
 ```
-```yaml {24-26}
+```yaml {1,13-17}
+# Copy job secrets!
+name: Deploy RegretBoard
+
+on:
+  push:
+    branches: [spoilers]
+
+jobs:
+  build:
+  copy:
+    runs-on: ubuntu-latest
+    needs: build
+    env:
+      IMAGE_NAME: regretboard:latest
+      REMOTE_USER: ubuntu
+      REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+      SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    steps:
+      - name: Download image artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: regretboard-image
+      - name: Copy file to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ env.REMOTE_HOST }}
+          username: ${{ env.REMOTE_USER }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          source: regretboard.tar.gz
+          target: /home/ubuntu/
+```
+```yaml {1,14-17}
+# Download image from previous step
+name: Deploy RegretBoard
+
+on:
+  push:
+    branches: [spoilers]
+
+jobs:
+  build:
+  copy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download image artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: regretboard-image
+      - name: Copy file to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ env.REMOTE_HOST }}
+          username: ${{ env.REMOTE_USER }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          source: regretboard.tar.gz
+          target: /home/ubuntu/
+```
+```yaml {1,18-31}
+# Actually send the file via SCP - it's using a custom action configured with our private key in secrets
+name: Deploy RegretBoard
+
+on:
+  push:
+    branches: [spoilers]
+
+jobs:
+  build:
+  copy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download image artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: regretboard-image
+      - name: Copy file to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ env.REMOTE_HOST }}
+          username: ${{ env.REMOTE_USER }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          source: regretboard.tar.gz
+          target: /home/ubuntu/
+```
+```yaml {1,12-13}
 # Deploy Job Setup
+name: Deploy RegretBoard
+
+on:
+  push:
+    branches: [spoilers]
+
+jobs:
+  build:
+  copy:
   deploy:
     runs-on: ubuntu-latest
     needs: copy
-```
-```yaml {27-31}
-# Deploy Job Steps
+    
+    env:
+      IMAGE_NAME: regretboard:latest
+      REMOTE_USER: ubuntu
+      REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+      SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
     steps:
       - name: SSH and deploy
         uses: appleboy/ssh-action@v1.0.0
         with:
+          host: ${{ env.REMOTE_HOST }}
+          username: ${{ env.REMOTE_USER }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          script: |
+            docker load < regretboard.tar.gz
+            docker-compose down
+            docker-compose up -d
+```
+```yaml {1,15-19}
+# Envs as usual, let's hide them for now
+name: Deploy RegretBoard
+
+on:
+  push:
+    branches: [spoilers]
+
+jobs:
+  build:
+  copy:
+  deploy:
+    runs-on: ubuntu-latest
+    needs: copy
+    
+    env:
+      IMAGE_NAME: regretboard:latest
+      REMOTE_USER: ubuntu
+      REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+      SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    steps:
+      - name: SSH and deploy
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ env.REMOTE_HOST }}
+          username: ${{ env.REMOTE_USER }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          script: |
+            docker load < regretboard.tar.gz
+            docker-compose down
+            docker-compose up -d
+```
+```yaml {1,17-99}
+# Finally, press the buttons
+name: Deploy RegretBoard
+
+on:
+  push:
+    branches: [spoilers]
+
+jobs:
+  build:
+  copy:
+  deploy:
+    runs-on: ubuntu-latest
+    needs: copy
+
+    steps:
+      - name: SSH and deploy
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ env.REMOTE_HOST }}
+          username: ${{ env.REMOTE_USER }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
           script: |
             docker load < regretboard.tar.gz
             docker-compose down
             docker-compose up -d
 ```
 ````
+
+---
+
+# The full file:
+<div class="max-h-100 overflow-auto border rounded p-4">
+```yaml {monaco}
+name: Deploy RegretBoard
+
+on:
+  push:
+    branches: [spoilers]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      image-name: ${{ steps.set-image.outputs.image-name }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: docker build -t regretboard:latest .
+
+      - name: Save Docker image
+        run: docker save regretboard:latest | gzip > regretboard.tar.gz
+
+      - name: List files in workspace (debugging step)
+        run: ls -alh
+
+      - name: Check Docker image tar file
+        run: |
+          if [ ! -s regretboard.tar.gz ]; then
+            echo "Docker image tar file is empty!"
+            exit 1
+          fi
+
+      - name: Upload Docker image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: regretboard-image
+          path: regretboard.tar.gz
+
+      - name: Upload Compose file
+        uses: actions/upload-artifact@v4
+        with:
+          name: compose-file
+          path: docker-compose.yml
+
+      - name: Upload init file
+        uses: actions/upload-artifact@v4
+        with:
+          name: init-sql
+          path: docker/init.sql
+
+      - name: Set image name
+        id: set-image
+        run: echo "image-name=regretboard:latest" >> $GITHUB_OUTPUT
+  copy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    env:
+      IMAGE_NAME: regretboard:latest
+      REMOTE_USER: ubuntu
+      REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+      SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    steps:
+      - name: Download image artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: regretboard-image
+
+      - name: Download Compose file
+        uses: actions/download-artifact@v4
+        with:
+          name: compose-file
+
+      - name: Download Compose file
+        uses: actions/download-artifact@v4
+        with:
+          name: init-sql
+
+      - name: Copy image to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ env.REMOTE_HOST }}
+          username: ${{ env.REMOTE_USER }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          source: regretboard.tar.gz
+          target: /home/ubuntu/
+
+      - name: Copy compose file to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ env.REMOTE_HOST }}
+          username: ${{ env.REMOTE_USER }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          source: docker-compose.yml
+          target: /home/ubuntu/
+
+      - name: Copy init file to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ env.REMOTE_HOST }}
+          username: ${{ env.REMOTE_USER }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          source: init.sql
+          target: /home/ubuntu/docker
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: copy
+
+    env:
+      IMAGE_NAME: regretboard:latest
+      REMOTE_USER: ubuntu
+      REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+      SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    steps:
+      - name: SSH and deploy
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ env.REMOTE_HOST }}
+          username: ${{ env.REMOTE_USER }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          script: |
+            docker load < regretboard.tar.gz
+            docker-compose down
+            docker-compose up -d
+
+```
+</div>
+
+---
+layout: center
+---
+
+# Live demo, let's see this break

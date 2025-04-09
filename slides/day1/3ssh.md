@@ -48,8 +48,8 @@
 # SSH Key Authentication
 <VClickList>
 
-- To access a system via SSH, your public key must be in the `~/.ssh/authorized_keys` file on the server.
-- This file authorizes your private key to establish a secure connection.
+- To access a system via SSH, your public key must be in the `/home/<user>/.ssh/authorized_keys` file on the server.
+- This file authorizes your private key to login as that user.
 
 </VClickList>
 
@@ -63,15 +63,18 @@
 
 </VClickList>
 
+---
+
 # Using AWS CLI to Import a Key Pair
 <VClickList>
 
 - Use AWS CLI to import the public key to create a key pair for EC2 instances.
-- This key pair is used to securely connect to your instances.
+    ```bash
+    aws ec2 import-key-pair --key-name MyKeyPair --public-key-material fileb://~/.ssh/id_ed25519.pub
+    ```
+
+- This key pair is used to securely connect to your instances. Remember the keyname name!
 
 </VClickList>
 
-```bash
-aws ec2 import-key-pair --key-name MyKeyPair --public-key-material fileb://~/.ssh/id_ed25519.pub
-```
 

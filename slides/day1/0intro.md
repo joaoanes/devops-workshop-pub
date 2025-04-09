@@ -119,12 +119,13 @@ mvn clean package
 
 - The resulting JAR file is the artifact needed to run the application on a host.
 - This JAR file contains all the compiled classes and dependencies.
-
+- Running it is easy!
+  ```bash
+    java -jar regret-board-0.0.1-SNAPSHOT.jar \
+    --server.port=80 \
+    --spring.datasource.url=jdbc:postgresql://localhost:5432/regretdb
+  ```
 </VClickList>
-
-```bash
-java -jar target/app.jar
-```
 
 ---
 layout: center

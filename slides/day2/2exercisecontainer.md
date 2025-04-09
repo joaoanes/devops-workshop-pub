@@ -129,8 +129,9 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 
 - **Build the Docker Image**:
   ```bash
-  docker build -t regretboard .
+  docker build --tag regretboard:v1 .
   ```
+  - This builds the image with the name and tag "regretboard@v1". You can have multiple tags for the same image name.
 
 - **Run the Docker Container**:
   ```bash

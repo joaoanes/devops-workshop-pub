@@ -132,3 +132,30 @@
   - Special Slidev directives: besides `v-click`/`v-after` (covered above), you have `v-present` (to show content only in presenter view) and others via add-ons. The `v-click` family also includes `v-click.group="n"` to group multiple elements in one click, and `<VSwitch>` to cycle through different content blocks on each click ([Components | Slidev](https://sli.dev/builtin/components#:~:text=Animations)) ([Components | Slidev](https://sli.dev/builtin/components#:~:text=component%20and%20its%20children,%28disabled)).
 - **Presenter Mode & Export:** Use the **Presenter view** (`Alt+P`) to see slides with notes and timers while presenting ([slidev/docs/guide/syntax.md at main · slidevjs/slidev · GitHub](https://github.com/slidevjs/slidev/blob/main/docs/guide/syntax.md#:~:text=Notes%20%7B)). Slidev can also export slides to PDF or PNG sequence via CLI or UI, using headless Chrome (with options for output resolution, etc.).
 
+# On using commands with output
+
+Whenever asked to write something like a bash command that contains an output, or the invocation of a git command or things similar to it, with inputs and outputs, use md magic-move to animate the output, like this: 
+
+````md magic-move
+```bash
+aws ec2 describe-instances \
+    --instance-ids i-00990752c68df49dc \
+    --query 'Reservations[*].Instances[*].PublicIpAddress' \ 
+    --output text
+```
+
+```bash
+aws ec2 describe-instances \
+    --instance-ids i-00990752c68df49dc \
+    --query 'Reservations[*].Instances[*].PublicIpAddress' \ 
+    --output text
+
+54.72.150.114
+```
+````
+Notice how we repeat the first lines on the second block of text, as well as the new text.
+
+
+# On language when writing
+
+On language - these are slides so use as few words as possible when writing markdown files. Use simple language and remember the people we're showing these to are bootcamp students that only know java. If you need to write a lot, consider using a diagram, or splitting stuff into multiple slides. 

@@ -33,6 +33,8 @@
 
 ---
 
+# ...extensive services and integrations...
+
 <img src="https://miro.medium.com/v2/resize:fit:4800/format:webp/1*LuVjQAyRnYLrbWHVMjjRPg.jpeg"/>
 
 ---
@@ -76,6 +78,16 @@
   ```bash
   aws configure
   ```
+- Check that it's you:
+  ```bash
+  aws sts get-caller-identity
+  
+  {
+    "UserId": "AIDAUOISLBCKEWSFVHV6Z",
+    "Account": "305518020756",
+    "Arn": "arn:aws:iam::305518020756:user/student-1"
+  }
+  ```
 - Launch an EC2 instance:
   ```bash
   aws ec2 run-instances --image-id ami-0abcdef1234567890 --count 1 --instance-type t2.micro --key-name MyKeyPair
@@ -89,4 +101,3 @@ layout: center
 
 # Keys?
 
----

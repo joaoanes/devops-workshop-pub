@@ -7,6 +7,7 @@ layout: center
 ---
 
 # Requirements for Creating an EC2 Instance
+
 <VClickList>
 
 - **Access Keys**: Ensure you have a key pair for SSH access.
@@ -14,8 +15,10 @@ layout: center
 - **Security Groups**: Set up security groups to control access, allowing SSH on port 22.
 
 </VClickList>
+
 ---
-## Step 1: Launch an EC2 Instance
+
+## Step 1: Finding the AMI
 
 - First, find the latest Ubuntu AMI using AWS CLI:
 ````md magic-move
@@ -48,8 +51,10 @@ ami-0520e200eb4f308f2   2025-04-03T06:01:59.000Z
 </VClickList>
 
 ---
+layout: center
+---
 
-## Let's create the security group
+## Step 2: Create a security group
 
 <v-click>
 ````md magic-move
@@ -69,11 +74,13 @@ aws ec2 create-security-group --group-name MySecurityGroup --description "Securi
 ````
 </v-click>
 
-
-
-<v-click>
+---
+layout: center
+---
 
 ## Then allow port 22 to be listened to
+
+<v-click>
 
 ````md magic-move
 ```bash
@@ -105,8 +112,10 @@ aws ec2 authorize-security-group-ingress --group-name MySecurityGroup --protocol
 </v-click>
 
 ---
+layout: center
+---
 
-## Step 1: Create the EC2 Instance
+## Step 3: Create the EC2 Instance
 
 - Use the security group to launch an EC2 instance:  
 ````md magic-move
@@ -165,8 +174,10 @@ aws ec2 run-instances \
 ````
 
 ---
+layout: center
+---
 
-## Find the Public IP
+## Step 4: Find the Public IP
 - Use the instance ID to find the public IP of your EC2 instance:
 ````md magic-move
 ```bash
@@ -188,7 +199,7 @@ aws ec2 describe-instances \
 
 ---
 
-## Step 2: Connect via SSH
+## Step 5: Connect via SSH
 <VClickList>
 
 - Use SSH to connect to your EC2 instance.
@@ -204,7 +215,7 @@ aws ec2 describe-instances \
 
 ---
 
-## Step 3: Verify SSH Key
+## Step 6: Verify SSH Key
 
 
 - Check the `authorized_keys` file on the instance.
