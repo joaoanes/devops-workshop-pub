@@ -29,6 +29,16 @@
 
 ---
 
+# Images vs. Containers
+<VClickList>
+
+- **Images**: Immutable files that contain the source code, libraries, dependencies, and tools needed for an application to run. Built using a script called a "Dockerfile". Basically ISOs like the ones you download from bittorrent. (please buy software and games you like)
+- **Containers**: Running instances of images. They are created using the `docker run` command. They have a state, they can be running, stopped, deleted. You can pause them and restart them at will.
+
+</VClickList>
+
+---
+
 # Common Docker Commands
 
 - **List Running Docker Containers**:
@@ -191,8 +201,8 @@ transition: slide-up
 # Docker Image Entrypoint
 <VClickList>
 
-- **Entrypoint**: The default command that runs when a container starts.
-- You can override the entrypoint to run different commands.
+- You can override the entrypoint to run different commands as what was specified in the dockerfile ENTRYPOINT.
+
 - Example: Run a bash shell in the Postgres image:
   ```bash
   docker run -it --entrypoint bash postgres
@@ -217,14 +227,3 @@ ENTRYPOINT ["/usr/games/cowsay"]
 
 - We've just turned an operating system image into something that just does one thing.
 - We can do the same with our app!
-
----
-
-# Images vs. Containers
-<VClickList>
-
-- **Images**: Immutable files that contain the source code, libraries, dependencies, and tools needed for an application to run.
-- **Containers**: Running instances of images. They are created using the `docker run` command.
-- Use `docker exec` to run commands inside an already running container.
-
-</VClickList>

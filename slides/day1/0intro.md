@@ -17,7 +17,9 @@
 layout: center
 ---
 
-# Keeping the application online
+## it's really about
+# keeping the application online
+## and firefighting to keep the application online
 
 ---
 

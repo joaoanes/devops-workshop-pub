@@ -211,9 +211,9 @@ mdc: true
 ```
 
 ```yaml {1-3,10-11}
-  # We're setting a custom volume here
+  # We're setting a custom volume here: pgdata
   # This way the container will actually save all data
-  # In our filesystem, under /var/lib/regretsboard/data (could be anywhere else)
+  # in a custom "disk" docker-compose will manage for us
   db:
     image: postgres:latest
     environment:
@@ -271,6 +271,7 @@ mdc: true
       POSTGRES_DB: regrets
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - pgdata:/var/lib/regretsboard/data
 ```
 
 - This moves the file ./init.sql into the directory postgres checks and executes before starting.
@@ -304,6 +305,7 @@ services:
       POSTGRES_DB: regrets
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - pgdata:/var/lib/regretsboard/data
 ```
 ```yaml {1-2,10-12,18-20}
 # Spring allows configuration via environment variables, which is standard and encouraged.
@@ -328,6 +330,7 @@ services:
       POSTGRES_DB: regrets
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - pgdata:/var/lib/regretsboard/data
 ```
 ```yaml {1-2,10}
 # The SPRING_DATASOURCE_URL uses 'db:5432' as a valid URL because Docker Compose sets up a network
@@ -352,8 +355,48 @@ services:
       POSTGRES_DB: regrets
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - pgdata:/var/lib/regretsboard/data
 ```
 ````
+
+---
+
+# Here's how it should look like put together
+
+<div class="max-h-80 overflow-auto border rounded p-4">
+
+```yaml {monaco}
+  services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: regrets
+      POSTGRES_USER: regretadmin
+      POSTGRES_PASSWORD: neveragain
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/regretsboard/data
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+  app:
+    image: regretboard:latest
+    build: .
+    ports:
+      - "80:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/regrets
+      SPRING_DATASOURCE_USERNAME: regretadmin
+      SPRING_DATASOURCE_PASSWORD: neveragain
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
+```
+
+</div>
+
 
 ---
 
@@ -458,3 +501,6 @@ docker-compose down
 ```
 ````
 - This frees up resources. Since our database is saved on your disk, it'll persist data - otherwise it'd be removed, and you'd start from scratch.
+
+---
+
