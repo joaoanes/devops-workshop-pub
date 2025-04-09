@@ -168,8 +168,12 @@ layout: center
 # Let's create a docker-compose.yml file for our app!
 
 ---
+transition: view-transition
+mdc: true
+---
 
-## Step 1: Define the App Service
+
+## Step 1: Define the App Service {.inline-block.view-transition-fin}
 
 - Use the `regretboard:latest` image.
 - Map port 8080 in the container to port 80 on the host.
@@ -183,8 +187,12 @@ services:
 ```
 
 ---
+transition: view-transition
+mdc: true
+---
 
-## Step 2: Define the Database Service
+
+## Step 2: Define the Database Service {.inline-block.view-transition-fin}
 
 
 - Use the `postgres:latest` image.
@@ -216,9 +224,14 @@ services:
       - pgdata:/var/lib/regretsboard/data
 ```
 ````
+
+---
+transition: view-transition
+mdc: true
 ---
 
-## Step 3: Write the Database Initialization Script
+
+## Step 3: Write the Database Initialization Script {.inline-block.view-transition-fin}
 
 - Create an `init.sql` script to set up the database schema and initial data.
 
@@ -238,8 +251,12 @@ VALUES
 ```
 
 ---
+transition: view-transition
+mdc: true
+---
 
-## Step 4: Add the Initialization Script to Volumes
+
+## Step 4: Add the Initialization Script to Volumes {.inline-block.view-transition-fin}
 
 
 
@@ -259,8 +276,12 @@ VALUES
 - This moves the file ./init.sql into the directory postgres checks and executes before starting.
 
 ---
+transition: view-transition
+mdc: true
+---
 
-## Step 5: Set environmental variables to hook everything together
+
+## Step 5: Set environmental variables to hook everything together {.inline-block.view-transition-fin}
 
 ````md magic-move
 ```yaml {all}
@@ -343,11 +364,15 @@ services:
 - Start the services defined in your `docker-compose.yml` file and verify that the application is running correctly.
 
 ---
+transition: view-transition
+mdc: true
+---
+
 
 
 ## Instructions
 
-1. **Start the Services:**
+1. **Start the Services:** {.inline-block.view-transition-fin}
    - Run the following command to start all services (in detached mode):
 ````md magic-move
 ```bash
@@ -364,23 +389,35 @@ docker-compose up -d
 ````
 
 ---
+transition: view-transition
+mdc: true
+---
 
-2. **Check it's working**
+
+2. **Check it's working** {.inline-block.view-transition-fin}
 
    - Open a web browser and navigate to `http://localhost:80/regrets`.
    - You should see the application interface, confirming that the app is running and connected to the database.
 
 ---
+transition: view-transition
+mdc: true
+---
 
-3. **Check Logs:**
+
+3. **Check Logs:** {.inline-block.view-transition-fin}
    - Use the following command to view the logs and ensure there are no errors (or check if there are any):
      ```bash
      docker-compose logs -f
      ```
 
 ---
+transition: view-transition
+mdc: true
+---
 
-4. **Check stats:**
+
+4. **Check stats:** {.inline-block.view-transition-fin}
    - Let's have a look at the container statistics:
 
 ````md magic-move
@@ -398,8 +435,12 @@ ffbc446bedf4   egret-board-db-1    13.05%    16.12MiB / 1.902GiB   0.83%     18.
 ````
 
 ---
+transition: view-transition
+mdc: true
+---
 
-5. **Stop the Services:**
+
+5. **Stop the Services:** {.inline-block.view-transition-fin}
    - Once verified, stop the services:
 
 ````md magic-move

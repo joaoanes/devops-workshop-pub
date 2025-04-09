@@ -378,8 +378,11 @@ Thankfully we already ran aws configure, so we can check `~/.aws/credentials` th
 - We want to bring up an ec2. How?
 
 ---
+transition: view-transition
+mdc: true
+---
 
-# Step 1: Configure the Backend
+# Step 1: Configure the Backend {.inline-block.view-transition-fin}
 <VClickList>
 
 - **Backend Block**: Configures where Terraform stores its state files.
@@ -395,8 +398,11 @@ Thankfully we already ran aws configure, so we can check `~/.aws/credentials` th
 </VClickList>
 
 ---
+transition: view-transition
+mdc: true
+---
 
-# Step 2: Set Up the Provider
+# Step 2: Set Up the Provider {.inline-block.view-transition-fin}
 <VClickList>
 
 - **Provider Block**: Specifies the provider (e.g., AWS) and configuration details.
@@ -410,8 +416,11 @@ Thankfully we already ran aws configure, so we can check `~/.aws/credentials` th
 </VClickList>
 
 ---
+transition: view-transition
+mdc: true
+---
 
-# Step 3: Define Variables
+# Step 3: Define Variables {.inline-block.view-transition-fin}
 <VClickList>
 
 - **Variable Block**: Defines input variables for the configuration.
@@ -426,8 +435,11 @@ Thankfully we already ran aws configure, so we can check `~/.aws/credentials` th
 </VClickList>
 
 ---
+transition: view-transition
+mdc: true
+---
 
-# Step 3.5: Configure Variable File and Apply
+# Step 3.5: Configure Variable File and Apply {.inline-block.view-transition-fin}
 <VClickList>
 
 - **Variable File**: Create a `tf.vars` file to store variable values.
@@ -443,8 +455,11 @@ Thankfully we already ran aws configure, so we can check `~/.aws/credentials` th
 </VClickList>
 
 ---
+transition: view-transition
+mdc: true
+---
 
-# Step 4: Generate Unique Identifiers
+# Step 4: Generate Unique Identifiers {.inline-block.view-transition-fin}
 <VClickList>
 
 - **Random Pet Resource**: Generates a random pet name for unique identifiers.
@@ -458,8 +473,11 @@ Thankfully we already ran aws configure, so we can check `~/.aws/credentials` th
 </VClickList>
 
 ---
+transition: view-transition
+mdc: true
+---
 
-# Step 5: Create the Key Pair
+# Step 5: Create the Key Pair {.inline-block.view-transition-fin}
 <VClickList>
 
 - **Key Pair Resource**: Creates an AWS key pair for SSH access.
@@ -474,8 +492,11 @@ Thankfully we already ran aws configure, so we can check `~/.aws/credentials` th
 </VClickList>
 
 ---
+transition: view-transition
+mdc: true
+---
 
-# Step 6: Set Up Security Groups
+# Step 6: Set Up Security Groups {.inline-block.view-transition-fin}
 <VClickList>
 
 - **Security Group Resource**: Manages security groups for EC2 instances.
@@ -526,10 +547,12 @@ resource "aws_security_group" "student_sg" {
 
 </v-click>
 
-
+---
+transition: view-transition
+mdc: true
 ---
 
-# Step 7: Retrieve the AMI
+# Step 7: Retrieve the AMI {.inline-block.view-transition-fin}
 <VClickList>
 
 - **AMI Data Source**: Retrieves the latest AMI for the instance.
@@ -550,8 +573,11 @@ resource "aws_security_group" "student_sg" {
 </VClickList>
 
 ---
+transition: view-transition
+mdc: true
+---
 
-# Step 8: Launch the EC2 Instance
+# Step 8: Launch the EC2 Instance {.inline-block.view-transition-fin}
 <VClickList>
 
 - **EC2 Instance Resource**: Defines the EC2 instance configuration.
@@ -574,8 +600,11 @@ resource "aws_security_group" "student_sg" {
 </VClickList>
 
 ---
+transition: view-transition
+mdc: true
+---
 
-# Step 9: Define Outputs
+# Step 9: Define Outputs {.inline-block.view-transition-fin}
 <VClickList>
 
 - **Output Blocks**: Provide useful information after deployment.
@@ -593,8 +622,11 @@ resource "aws_security_group" "student_sg" {
 </VClickList>
 
 ---
+transition: view-transition
+mdc: true
+---
 
-# Here's how it should look put together
+# Here's how it should look put together {.inline-block.view-transition-fin}
 
 
 <div class="max-h-100 overflow-auto border rounded p-4">

@@ -32,7 +32,7 @@ layout: center
 
 ---
 
-## Application Tour 
+# Application Tour 
 <VClickList>
 
 - Controller
@@ -99,19 +99,23 @@ public class Regret {
 ```
 
 ---
+layout: center
+---
 
 # Building the Application
 <VClickList>
 
 - Use Maven to build the Spring Boot application.
-- The build process compiles the code and packages it into a JAR file.
+    ```bash
+    mvn clean package
+    ```
+- The build process compiles the code and packages it into a JAR file in the ***target*** folder.
 
 </VClickList>
 
-```bash
-mvn clean package
-```
 
+---
+layout: center
 ---
 
 # The Artifact

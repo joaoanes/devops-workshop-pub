@@ -166,7 +166,12 @@ Upgrade-Insecure-Requests: 1
 # Rendering the Page
 
 ## Browser Rendering
+
+<VClickList>
+
 - Your browser interprets the HTML to display the webpage.
 - It constructs the Document Object Model (DOM) and applies styles and scripts.
 - It also fetches JavaScript and CSS files, which are loaded based on their order in the HTML and various frontend optimization techniques. This can include asynchronous loading, deferred execution, and caching strategies to enhance performance and user experience.
+- It also executes all the javascript code necessary.
 
+</VClickList>

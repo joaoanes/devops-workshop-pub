@@ -17,8 +17,12 @@ layout: center
 </VClickList>
 
 ---
+transition: view-transition
+mdc: true
+---
 
-## Step 1: Finding the AMI
+
+## Step 1: Finding the AMI {.inline-block.view-transition-step}
 
 - First, find the latest Ubuntu AMI using AWS CLI:
 ````md magic-move
@@ -41,8 +45,13 @@ ami-0520e200eb4f308f2   2025-04-03T06:01:59.000Z
 ````
 
 ---
+transition: view-transition
+mdc: true
+---
 
-## Security Groups and SSH Access
+
+## Security Groups and SSH Access {.inline-block.view-transition-step}
+
 <VClickList>
 
 - Security groups act as a virtual firewall for your EC2 instances to control inbound and outbound traffic.
@@ -52,9 +61,11 @@ ami-0520e200eb4f308f2   2025-04-03T06:01:59.000Z
 
 ---
 layout: center
+transition: view-transition
+mdc: true
 ---
 
-## Step 2: Create a security group
+## Step 2: Create a security group {.inline-block.view-transition-fin}
 
 <v-click>
 ````md magic-move
@@ -76,9 +87,11 @@ aws ec2 create-security-group --group-name MySecurityGroup --description "Securi
 
 ---
 layout: center
+transition: view-transition
+mdc: true
 ---
 
-## Then allow port 22 to be listened to
+## Then allow port 22 to be listened to {.inline-block.view-transition-fin}
 
 <v-click>
 
@@ -113,9 +126,11 @@ aws ec2 authorize-security-group-ingress --group-name MySecurityGroup --protocol
 
 ---
 layout: center
+transition: view-transition
+mdc: true
 ---
 
-## Step 3: Create the EC2 Instance
+## Step 3: Create the EC2 Instance {.inline-block.view-transition-fin}
 
 - Use the security group to launch an EC2 instance:  
 ````md magic-move
@@ -175,9 +190,11 @@ aws ec2 run-instances \
 
 ---
 layout: center
+transition: view-transition
+mdc: true
 ---
 
-## Step 4: Find the Public IP
+## Step 4: Find the Public IP {.inline-block.view-transition-fin}
 - Use the instance ID to find the public IP of your EC2 instance:
 ````md magic-move
 ```bash
@@ -198,8 +215,11 @@ aws ec2 describe-instances \
 ````
 
 ---
+transition: view-transition
+mdc: true
+---
 
-## Step 5: Connect via SSH
+## Step 5: Connect via SSH {.inline-block.view-transition-fin}
 <VClickList>
 
 - Use SSH to connect to your EC2 instance.
@@ -214,8 +234,11 @@ aws ec2 describe-instances \
 </VClickList>
 
 ---
+transition: view-transition
+mdc: true
+---
 
-## Step 6: Verify SSH Key
+## Step 6: Verify SSH Key {.inline-block.view-transition-fin}
 
 
 - Check the `authorized_keys` file on the instance.

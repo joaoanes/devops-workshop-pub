@@ -84,8 +84,11 @@ src: ./day2/4ci.md
 ---
 
 ---
+transition: view-transition
+mdc: true
+---
 
-# Final thoughts
+# Final thoughts {.inline-block.view-transition-fin}
 
 ### What you’ve learned:
 <VClickList>
@@ -99,8 +102,12 @@ src: ./day2/4ci.md
 </VClickList>
 
 ---
+transition: view-transition
+mdc: true
+---
 
-# Final thoughts
+# Final thoughts {.inline-block.view-transition-fin}
+<VClickList>
 
 - **DevOps is leverage.** Full stack developers who understand it can ship, run, and maintain their work without waiting on someone else.
 
@@ -111,3 +118,80 @@ src: ./day2/4ci.md
 - **Shared tools = shared language.** Knowing the stack end-to-end makes collaboration smoother and less error-prone.
 
 - **It’s where things are headed.** Devs who ignore this stuff get left behind.
+
+</VClickList>
+
+---
+layout: center
+transition: view-transition
+mdc: true
+---
+
+# Topics Not Covered {.inline-block.view-transition-title}
+
+Here are some topics to further explore on your DevOps journey:
+<VClickList>
+
+- **Advanced Container Orchestration**:
+  *Kubernetes, Docker Swarm, and other orchestration platforms.*
+
+- **Service Meshes and API Gateways**:
+  *Tools like Istio, Linkerd, or Kong for managing inter-service communication and security.*
+
+- **Infrastructure Monitoring & Observability**:
+  *Solutions such as Prometheus, Grafana, ELK/EFK stacks, and tracing tools like Jaeger.*
+
+</VClickList>
+
+---
+layout: center
+transition: view-transition
+mdc: true
+---
+
+# Topics Not Covered {.inline-block.view-transition-title}
+<VClickList>
+
+- **Configuration Management**: 
+  *Automation tools such as Ansible, Chef, or Puppet for post-deployment system configuration.*
+
+- **Advanced CI/CD Patterns**:
+  *Blue-green deployments, canary releases, automated testing, security scanning, and rollback strategies.*
+
+- **DevSecOps**:
+  *Integrating security practices throughout the CI/CD pipeline and container image hardening.*
+
+</VClickList>
+
+---
+layout: center
+transition: view-transition
+mdc: true
+---
+
+# Topics Not Covered {.inline-block.view-transition-title}
+<VClickList>
+
+- **GitOps and Infrastructure Testing**:
+  *Using Git as the source of truth for your infrastructure and automated testing for IaC.*
+
+- **Cloud Cost Optimization and Scaling**:
+  *Techniques for monitoring and optimizing cloud spending and automating scaling operations.*
+
+</VClickList>
+
+---
+layout: center
+transition: view-transition
+mdc: true
+---
+# Topics Not Covered {.inline-block.view-transition-title}
+<VClickList>
+
+- **Serverless and Hybrid Architectures**:
+  *Exploring serverless computing (e.g., AWS Lambda, Azure Functions) and hybrid cloud models.*
+
+- **Advanced Networking and Security**:
+  *Deep dives into container networking, network policies, and other advanced security configurations.*
+
+</VClickList>
