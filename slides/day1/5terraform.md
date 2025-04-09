@@ -13,9 +13,7 @@
 
 
 ---
-title: Terraform & IaC Deep Dive
-theme: seriph
-transition: slide-left
+layout: center
 mdc: true
 ---
 
@@ -32,6 +30,8 @@ mdc: true
 </VClickList>
 
 ---
+layout: center
+---
 
 # Introducing Terraform
 <VClickList>
@@ -43,6 +43,8 @@ mdc: true
 
 </VClickList>
 
+---
+layout: center
 ---
 
 ## Installing Terraform
@@ -433,7 +435,7 @@ Thankfully we already ran aws configure, so we can check `~/.aws/credentials` th
   student_public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI..."
   ```
 
-- **Apply with Variable File**: Use the `--var-file` flag to apply configuration.
+- **Apply with Variable File**: Use the `--var-file` flag to apply configuration when we run it. (if you don't, terraform will ask for the values before running)
   ```bash
   terraform apply --var-file=tf.vars
   ```
@@ -484,7 +486,7 @@ Thankfully we already ran aws configure, so we can check `~/.aws/credentials` th
 
 <v-click>
 
-<div class="max-h-100 overflow-auto border rounded p-4">
+<div class="max-h-80 overflow-auto border rounded p-4">
 ```hcl
 resource "aws_security_group" "student_sg" {
   name        = "student-sg-${random_pet.student_id.id}"
@@ -689,6 +691,8 @@ output "student_instance_id" {
 </div>
 
 ---
+layout: center
+---
 
 # Again, a primer on terraform:
 
@@ -701,6 +705,8 @@ output "student_instance_id" {
 
 </VClickList>
 
+---
+layout: center
 ---
 
 # Accessing Your EC2 Instance
