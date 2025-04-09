@@ -13,16 +13,23 @@ mdc: true
 ---
 src: ./day1/0intro.md 
 ---
+
+---
 src: ./day1/1internet.md
+---
+
 ---
 src: ./day1/2hosting.md
 ---
+
 ---
 src: ./day1/3ssh.md
 ---
+
 ---
 src: ./day1/4exercisessh.md
 ---
+
 ---
 src: ./day1/5terraform.md
 ---

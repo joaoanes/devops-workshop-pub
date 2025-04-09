@@ -114,7 +114,7 @@ sudo apt install terraform
   ```
 
 </VClickList>
-
+ 
 ---
 
 # Terraform Support Across Cloud Providers
@@ -425,6 +425,23 @@ Thankfully we already ran aws configure, so we can check `~/.aws/credentials` th
 
 ---
 
+# Step 3.5: Configure Variable File and Apply
+<VClickList>
+
+- **Variable File**: Create a `tf.vars` file to store variable values.
+  ```hcl
+  student_public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI..."
+  ```
+
+- **Apply with Variable File**: Use the `--var-file` flag to apply configuration.
+  ```bash
+  terraform apply --var-file=tf.vars
+  ```
+
+</VClickList>
+
+---
+
 # Step 4: Generate Unique Identifiers
 <VClickList>
 
@@ -467,7 +484,7 @@ Thankfully we already ran aws configure, so we can check `~/.aws/credentials` th
 
 <v-click>
 
-<div class="max-h-80 overflow-auto border rounded p-4">
+<div class="max-h-100 overflow-auto border rounded p-4">
 ```hcl
 resource "aws_security_group" "student_sg" {
   name        = "student-sg-${random_pet.student_id.id}"

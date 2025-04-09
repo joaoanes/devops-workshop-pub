@@ -56,11 +56,9 @@
 <VClickList>
 
 - AWS CLI is a unified tool to manage AWS services.
-- Install on Linux:
+- Install on Mac:
   ```bash
-  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-  unzip awscliv2.zip
-  sudo ./aws/install
+  brew install awscli
   ```
 - Verify installation:
   ```bash
