@@ -207,7 +207,7 @@ mdc: true
       POSTGRES_PASSWORD: neveragain
       POSTGRES_DB: regrets
     volumes:
-      - pgdata:/var/lib/regretsboard/data
+      - pgdata:/var/lib/postgresql/data
 ```
 
 ```yaml {1-3,10-11}
@@ -221,7 +221,7 @@ mdc: true
       POSTGRES_PASSWORD: neveragain
       POSTGRES_DB: regrets
     volumes:
-      - pgdata:/var/lib/regretsboard/data
+      - pgdata:/var/lib/postgresql/data
 ```
 ````
 
@@ -271,7 +271,7 @@ mdc: true
       POSTGRES_DB: regrets
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - pgdata:/var/lib/regretsboard/data
+      - pgdata:/var/lib/postgresql/data
 ```
 
 - This moves the file ./init.sql into the directory postgres checks and executes before starting.
@@ -305,7 +305,7 @@ services:
       POSTGRES_DB: regrets
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - pgdata:/var/lib/regretsboard/data
+      - pgdata:/var/lib/postgresql/data
 ```
 ```yaml {1-2,10-12,18-20}
 # Spring allows configuration via environment variables, which is standard and encouraged.
@@ -330,7 +330,7 @@ services:
       POSTGRES_DB: regrets
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - pgdata:/var/lib/regretsboard/data
+      - pgdata:/var/lib/postgresql/data
 ```
 ```yaml {1-2,10}
 # The SPRING_DATASOURCE_URL uses 'db:5432' as a valid URL because Docker Compose sets up a network
@@ -355,7 +355,7 @@ services:
       POSTGRES_DB: regrets
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - pgdata:/var/lib/regretsboard/data
+      - pgdata:/var/lib/postgresql/data
 ```
 ````
 
@@ -376,7 +376,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/regretsboard/data
+      - pgdata:/var/lib/postgresql/data
       - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
   app:
