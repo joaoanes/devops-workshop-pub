@@ -40,7 +40,7 @@ We just need 3 things now:
 # Transfer the Compose File
 - Copy your `docker-compose.yml` file to the server:
 ```bash
-scp docker-compose.yml user@server:/home/ubuntu
+scp docker-compose.yml user@server:/home/ubuntu/docker
 ```
 
 ---
@@ -66,83 +66,127 @@ scp docker-compose.yml user@server:/home/ubuntu
 
 - Using chrome, go to http://[server ip]/regrets, and check it out!
 
-## Troubleshooting
+- Troubleshooting
+  - **Check Compose Status:**
+    - Run `docker-compose ps` to ensure all services are up and running.
 
-- **Check Compose Status:**
-  - Run `docker-compose ps` to ensure all services are up and running.
+  - **View Logs:**
+    - Use `docker-compose logs -f` to view real-time logs and identify any errors.
 
-- **View Logs:**
-  - Use `docker-compose logs -f` to view real-time logs and identify any errors.
+  - **Inspect Containers:**
+    - Use `docker inspect <container_name>` to check container configurations and network settings.
 
-- **Inspect Containers:**
-  - Use `docker inspect <container_name>` to check container configurations and network settings.
-
-- **Restart Services:**
-  - If issues persist, try restarting the services with `docker-compose restart`.
+  - **Restart Services:**
+    - If issues persist, try starting from scratch with `docker-compose down --volumes`.
 
 ---
 
 # Updating Your Application
+
+<v-click>
 
 - **Manual Update Process:**
   - Build a new docker image of your app locally.
   - Transfer the updated image to the server.
   - Restart the services to pick up the latest version.
 
+</v-click>
+<v-click>
+
 - **Challenges:**
   - This process can be repetitive and error-prone.
 
+</v-click>
+
 <v-click>
+
 This gets old **fast**.
+
 </v-click>
 
 ---
-
+layout: center
+---
 
 
 # CI/CD to the Rescue
 
 ## What is CI/CD?
 
+<VClickList>
+
 - **Continuous Integration (CI):** The practice of automatically building and testing code changes, ensuring that new code integrates smoothly with the existing codebase.
 - **Continuous Deployment (CD):** The process of automatically deploying code changes to production, ensuring that new features and fixes are delivered quickly and reliably.
 
+</VClickList>
+
+---
+layout: center
 ---
 
-## Benefits of CI/CD
+# Benefits of CI/CD
+
+<VClickList>
 
 - **Automation:** Reduces manual intervention, minimizing human error and speeding up the development process.
 - **Consistency:** Ensures that code is tested and deployed in a consistent manner across all environments.
 - **Rapid Feedback:** Provides immediate feedback on code changes, allowing developers to address issues quickly.
 
+</VClickList>
+
+---
+layout: center
 ---
 
-## Problems Solved by CI/CD
+# Problems Solved by CI/CD
+
+<VClickList>
 
 - **Integration Issues:** Automatically tests code changes to catch integration problems early.
 - **Deployment Delays:** Automates the deployment process, reducing the time it takes to release new features.
 - **Environment Discrepancies:** Ensures that code runs consistently across different environments.
 
+</VClickList>
+
+---
+layout: center
 ---
 
-## Tools for CI/CD
+# Tools for CI/CD
+
+<VClickList>
 
 - **GitHub Actions:** A popular tool for automating workflows directly within GitHub.
 - **CircleCI:** A cloud-based CI/CD tool that integrates with GitHub and other version control systems.
 - **Jenkins:** An open-source automation server that supports building, deploying, and automating any project.
 
+</VClickList>
+
+---
+layout: center
 ---
 
-## CI/CD Concepts (continued)
+# CI/CD Concepts (continued)
 
 ### Pipeline Anatomy
+<VClickList>
+
 - **Stages:** A pipeline is represented by a file, usually YAML, and is divided into stages, each representing a phase in the CI/CD process, such as build, test, and deploy.
 - **Jobs:** Each stage consists of jobs that perform specific tasks, like running tests or deploying code.
 - **Triggers:** Pipelines can be triggered by events such as code pushes, pull requests, or scheduled times.
+</VClickList>
 
 ### Environments and Secrets
+<VClickList>
+
 - **Environments:** Define where your code runs, such as development, staging, or production. Each environment can have different configurations.
 - **Secrets Management:** Securely store sensitive information like API keys and passwords. CI/CD tools provide mechanisms to manage and inject secrets into your pipeline without exposing them in your codebase.
+
+</VClickList>
+
+
+---
+layout: center
 ---
 
 # Our ideal pipeline
@@ -150,14 +194,17 @@ This gets old **fast**.
 - Git push triggers:
 
 <VClickList>
+
 - Build Docker image
 - Upload image to EC2
 - Restart Compose
+
 </VClickList>
 
 ---
 
 ## Introduction to GitHub Actions
+<VClickList>
 
 - **What is GitHub Actions?**
   - GitHub Actions is a CI/CD tool integrated directly into GitHub, allowing you to automate your workflow by defining
@@ -172,6 +219,8 @@ schedule.
   - Seamless integration with GitHub repositories.
   - Supports a wide range of actions and integrations with other services.
   - Provides a marketplace for reusable actions created by the community.
+
+</VClickList>
 
 ---
 
@@ -194,8 +243,11 @@ jobs:
 
 ## Setting Up Secrets in GitHub
 
+<VClickList>
+
 - **Why Secrets?**
   - Secrets are used to store sensitive information like passwords, API keys, and SSH keys securely.
+  - We need to store an ssh key for it to connect to our server.
 
 - **How to Set Up Secrets:**
   1. Navigate to your GitHub repository.
@@ -208,6 +260,8 @@ jobs:
   - Access secrets in your workflow using the `secrets` context, e.g., `${{ secrets.EC2_SSH_KEY }}`.
 
 This setup ensures that sensitive information is not exposed in your codebase.
+
+</VClickList>
 
 ---
 

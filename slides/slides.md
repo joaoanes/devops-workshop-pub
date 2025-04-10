@@ -190,6 +190,7 @@ mdc: true
 
 ---
 transition: slide-up
+layout: center
 ---
 
 # Topics Not Covered {.inline-block.view-transition-title}

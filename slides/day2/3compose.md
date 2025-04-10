@@ -363,10 +363,10 @@ services:
 
 # Here's how it should look like put together
 
-<div class="max-h-80 overflow-auto border rounded p-4">
+<div class="max-h-100 overflow-auto border rounded p-4">
 
-```yaml {monaco}
-  services:
+```yaml
+services:
   db:
     image: postgres:15
     environment:
@@ -395,27 +395,26 @@ volumes:
   pgdata:
 ```
 
+
 </div>
 
 
+- Remember to create a "docker" folder with <a href="/118">init.sql</a> inside!
+---
+layout: center
 ---
 
 # Exercise: Run Your Docker Compose File
-
-## Objective
 
 - Start the services defined in your `docker-compose.yml` file and verify that the application is running correctly.
 
 ---
 transition: view-transition
+layout: center
 mdc: true
 ---
 
-
-
-## Instructions
-
-1. **Start the Services:** {.inline-block.view-transition-fin}
+# Step 1: Start the Services: {.inline-block.view-transition-fin}
    - Run the following command to start all services (in detached mode):
 ````md magic-move
 ```bash
@@ -433,22 +432,22 @@ docker-compose up -d
 
 ---
 transition: view-transition
+layout: center
 mdc: true
 ---
 
-
-2. **Check it's working** {.inline-block.view-transition-fin}
+# Step 2: Check it's working {.inline-block.view-transition-fin}
 
    - Open a web browser and navigate to `http://localhost:80/regrets`.
    - You should see the application interface, confirming that the app is running and connected to the database.
 
 ---
 transition: view-transition
+layout: center
 mdc: true
 ---
 
-
-3. **Check Logs:** {.inline-block.view-transition-fin}
+# Step 3: Check Logs: {.inline-block.view-transition-fin}
    - Use the following command to view the logs and ensure there are no errors (or check if there are any):
      ```bash
      docker-compose logs -f
@@ -456,11 +455,10 @@ mdc: true
 
 ---
 transition: view-transition
+layout: center
 mdc: true
 ---
-
-
-4. **Check stats:** {.inline-block.view-transition-fin}
+# Step 4: Check stats: {.inline-block.view-transition-fin}
    - Let's have a look at the container statistics:
 
 ````md magic-move
@@ -478,29 +476,25 @@ ffbc446bedf4   egret-board-db-1    13.05%    16.12MiB / 1.902GiB   0.83%     18.
 ````
 
 ---
-transition: view-transition
+layout: center
 mdc: true
 ---
-
-
-5. **Stop the Services:** {.inline-block.view-transition-fin}
-   - Once verified, stop the services:
+# Step 5. Stop the services AND volumes {.inline-block.view-transition-fin}
 
 ````md magic-move
 ```bash
-docker-compose down
+docker-compose down --volumes
 ```
 
 ```bash
-docker-compose down
+docker-compose down --volumes
 [+] Running 3/2
  ✔ Container regret-board-app-1  Removed
  ✔ Container regret-board-db-1   Removed
+ ✔ Volume regret-board_pgdata    Removed
  ✔ Network regret-board_default  Removed
 
 ```
 ````
-- This frees up resources. Since our database is saved on your disk, it'll persist data - otherwise it'd be removed, and you'd start from scratch.
-
----
+- This frees up resources. Since our database is saved on your disk as a volume, if we don't use the --volumes flag, it'll persist through compose up and compose down. You usually don't want to do this, volumes are important.
 
