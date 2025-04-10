@@ -64,9 +64,21 @@
 
 ### Update `docker-compose.yml` to use Caddy
 
-1. **Edit the `docker-compose.yml` file** to include a Caddy service for automatic certificate management. Here's how you can modify it:
+- We need to add a bunch of things
+  - The caddy webserver service, that will take the requests for us
+    - It also handles HTTPS traffic
+  - Two docker networks to separate caddy and our app/database
+  - 2 new volumes for caddy to store stuff in
+  - A file to configure Caddy
 
-```yaml
+---
+
+<div class="max-h-100 overflow-auto border rounded p-4">
+
+````md magic-move
+```yaml {1,13-14,25-27,35-37,39-43,47-55}
+# This is A LOT. Let's go one by one
+
 services:
   db:
     image: postgres:15
@@ -74,23 +86,24 @@ services:
       POSTGRES_DB: regrets
       POSTGRES_USER: regretadmin
       POSTGRES_PASSWORD: neveragain
-    ports:
-      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - app_network
 
   app:
     image: regretboard:latest
     build: .
-    ports:
-      - "8080:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/regrets
       SPRING_DATASOURCE_USERNAME: regretadmin
       SPRING_DATASOURCE_PASSWORD: neveragain
     depends_on:
       - db
+    networks:
+      - app_network
+      - caddy_network
 
   caddy:
     image: caddy:latest
@@ -98,23 +111,207 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
     environment:
-      - CADDY_EMAIL=your-email@example.com
+      - CADDY_EMAIL=joao.anes@gmail.com
+    depends_on:
+      - app
+    networks:
+      - caddy_network
 
 volumes:
   pgdata:
+  caddy_data:
+  caddy_config:
+
+networks:
+  app_network:
+    driver: bridge
+  caddy_network:
+    driver: bridge
 ```
+
+```yaml {1,13-14,25-26}
+# We add a new network that links together db and app
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: regrets
+      POSTGRES_USER: regretadmin
+      POSTGRES_PASSWORD: neveragain
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - app_network
+
+  app:
+    image: regretboard:latest
+    build: .
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/regrets
+      SPRING_DATASOURCE_USERNAME: regretadmin
+      SPRING_DATASOURCE_PASSWORD: neveragain
+    depends_on:
+      - db
+    networks:
+      - app_network
+      - caddy_network
+
+  caddy:
+    
+volumes:
+  
+networks:
+  
+```
+
+```yaml {1,17,33}
+# We also add a network that links the app and caddy (the webserver) together
+
+services:
+  db:
+
+  app:
+    image: regretboard:latest
+    build: .
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/regrets
+      SPRING_DATASOURCE_USERNAME: regretadmin
+      SPRING_DATASOURCE_PASSWORD: neveragain
+    depends_on:
+      - db
+    networks:
+      - app_network
+      - caddy_network
+
+  caddy:
+    image: caddy:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      - CADDY_EMAIL=joao.anes@gmail.com
+    depends_on:
+      - app
+    networks:
+      - caddy_network
+
+volumes:
+  
+networks:
+  
+```
+```yaml {1,7-13}
+# We also add them here
+
+services:
+  db:
+  app:
+  caddy:
+volumes:
+  
+networks:
+  app_network:
+    driver: bridge
+  caddy_network:
+    driver: bridge
+```
+```yaml {1,15-16,26-27}
+# We also add docker volumes to caddy and declare them
+
+services:
+  db:
+
+  app:
+
+  caddy:
+    image: caddy:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      - CADDY_EMAIL=joao.anes@gmail.com
+    depends_on:
+      - app
+    networks:
+      - caddy_network
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:
+
+networks:
+  
+```
+```yaml {1,14}
+# We also copy the "caddyfile" from ./docker to the caddy service
+
+services:
+  db:
+
+  app:
+
+  caddy:
+    image: caddy:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      - CADDY_EMAIL=joao.anes@gmail.com
+    depends_on:
+      - app
+    networks:
+      - caddy_network
+
+volumes:
+  
+networks:
+  
+```
+````
+
+</div>
 
 ---
 
-2. **Create a `Caddyfile`** in the same directory as `docker-compose.yml` with the following content:
+# Caddyfile?
+
+- The caddyfile just looks like this:
 
 ```
 yourdomain.com {
   reverse_proxy app:8080
-  tls {
-    email your-email@example.com
-  }
 }
 ```
+
+- It's telling caddy "look, when requests come for that domain, send them to app on port 8080". Very simple and effective.
+- As a good side effect, caddy will automatically register a certificate for this domain, and enable https!
+
+---
+layout: center
+---
+
+# Live demo: Let's give it a try!
+```bash 
+  docker-compose -f docker-compose.caddy.yml up
+```
+
+#### Psst: your server has a hidden .spoilers directory 🤫

@@ -84,6 +84,10 @@ src: ./day2/4ci.md
 ---
 
 ---
+src: ./day2/5dns.md
+---
+
+---
 transition: view-transition
 mdc: true
 ---
@@ -97,6 +101,7 @@ mdc: true
 - Terraform 🛠️
 - Docker 🐳
 - CI/CD 🔁
+- Networking 🌐
 - More knowledge than most of the people I interview!
 
 </VClickList>
@@ -132,11 +137,14 @@ mdc: true
 Here are some topics to further explore on your DevOps journey:
 <VClickList>
 
-- **Advanced Container Orchestration**:
-  *Kubernetes, Docker Swarm, and other orchestration platforms.*
+- **Physical separation of concerns**:
+  *Your app server should NOT live on the same host as your database server.*
 
-- **Service Meshes and API Gateways**:
-  *Tools like Istio, Linkerd, or Kong for managing inter-service communication and security.*
+- **Databases, in general**
+  *Your data is your life. Backups, scaling horizontally AND vertically, caching, replication, query monitoring/logging.*
+  
+- **Advanced container orchestration**:
+  *Kubernetes, Docker Swarm, and other orchestration platforms.*
 
 - **Infrastructure Monitoring & Observability**:
   *Solutions such as Prometheus, Grafana, ELK/EFK stacks, and tracing tools like Jaeger.*
@@ -152,10 +160,10 @@ mdc: true
 # Topics Not Covered {.inline-block.view-transition-title}
 <VClickList>
 
-- **Configuration Management**: 
+- **Configuration management**: 
   *Automation tools such as Ansible, Chef, or Puppet for post-deployment system configuration.*
 
-- **Advanced CI/CD Patterns**:
+- **Advanced CI/CD patterns**:
   *Blue-green deployments, canary releases, automated testing, security scanning, and rollback strategies.*
 
 - **DevSecOps**:
@@ -172,10 +180,10 @@ mdc: true
 # Topics Not Covered {.inline-block.view-transition-title}
 <VClickList>
 
-- **GitOps and Infrastructure Testing**:
+- **GitOps and infrastructure testing**:
   *Using Git as the source of truth for your infrastructure and automated testing for IaC.*
 
-- **Cloud Cost Optimization and Scaling**:
+- **Cloud cost optimization and scaling**:
   *Techniques for monitoring and optimizing cloud spending and automating scaling operations.*
 
 </VClickList>
@@ -188,10 +196,10 @@ mdc: true
 # Topics Not Covered {.inline-block.view-transition-title}
 <VClickList>
 
-- **Serverless and Hybrid Architectures**:
+- **Serverless and hybrid architectures**:
   *Exploring serverless computing (e.g., AWS Lambda, Azure Functions) and hybrid cloud models.*
 
-- **Advanced Networking and Security**:
+- **Advanced networking and security**:
   *Deep dives into container networking, network policies, and other advanced security configurations.*
 
 </VClickList>
