@@ -10,7 +10,7 @@
 
 - Running the AWS configuration and plugging in our id&secret
   ```bash {monaco}
-    brew aws configure
+    aws configure
   ```
 
 - Installing terraform
