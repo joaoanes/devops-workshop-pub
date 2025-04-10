@@ -1,21 +1,30 @@
 # We have to talk about DNS
 
+<VClickList>
+
 - We managed to connect to our server, but using IPs feels wrong and dirty
 - How do we actually register a domain name and use it?
+
+</VClickList>
 
 ---
 
 # Registering a Domain
+
+<VClickList>
 
 - Purchase a domain from a registrar like Namecheap or GoDaddy.
 - Domain costs vary: .com and .org domains are generally more expensive, often ranging from $10 to $50 per year.
 - Vanity domains like .xyz can be cheaper, sometimes as low as $1 to $10 per year.
 - Once registered, you can manage your domain settings through the registrar's dashboard.
 
+</VClickList>
 
 ---
 
 # Configuring DNS Records
+
+<VClickList>
 
 - An A record maps a domain to an IP address, allowing users to access your server using a domain name.
 - Point the A record to your server's IP address.
@@ -25,18 +34,32 @@
   - **TXT**: Provide text information to sources outside your domain.
   - **SRV**: Specify a port for specific services.
 
+</VClickList>
+
+---
+layout: center
+---
+
+# Live demo! Let's configure a domain
+
 ---
 
 # DNS Propagation
+
+<VClickList>
 
 - Changes to DNS records can take time to propagate.
 - Propagation is the process of updating DNS servers worldwide.
 - It can take from a few minutes to 48 hours.
 - Good registrars often update DNS records quickly, sometimes in seconds, due to efficient infrastructure and direct connections to DNS servers.
 
+</VClickList>
+
 ---
 
 # Enabling HTTPS with Certbot
+
+<VClickList>
 
 - Now that we have a domain, we can get a certificate for that domain to enable HTTPS.
 - Certbot is a free tool to obtain and renew SSL/TLS certificates from Let's Encrypt.
@@ -46,9 +69,14 @@
   - Certbot can also set up automatic renewal for your certificates.
 - This process ensures your website is secure and trusted by browsers.
 
+</VClickList>
+
+
 ---
 
 # Using Nginx and Caddy with Certbot
+
+<VClickList>
 
 - **Nginx**:
   - Install Certbot and the Nginx plugin.
@@ -59,10 +87,13 @@
   - Caddy automatically manages HTTPS certificates.
   - Use the Caddyfile to configure domain and reverse proxy settings.
   - Caddy handles certificate renewal automatically.
+</VClickList>
 
 ---
 
-### Update `docker-compose.yml` to use Caddy
+# Exercise: set `docker-compose.yml` to use Caddy
+
+<VClickList>
 
 - We need to add a bunch of things
   - The caddy webserver service, that will take the requests for us
@@ -70,13 +101,15 @@
   - Two docker networks to separate caddy and our app/database
   - 2 new volumes for caddy to store stuff in
   - A file to configure Caddy
+  
+</VClickList>
 
 ---
 
-<div class="max-h-100 overflow-auto border rounded p-4">
+<div class="max-h-120 overflow-auto border rounded p-4">
 
 ````md magic-move
-```yaml {1,13-14,25-27,35-37,39-43,47-55}
+```yaml {1,13-14,25-43,47-55}
 # This is A LOT. Let's go one by one
 
 services:
@@ -210,7 +243,7 @@ volumes:
 networks:
   
 ```
-```yaml {1,7-13}
+```yaml {1,9-13}
 # We also add them here
 
 services:
@@ -301,9 +334,12 @@ yourdomain.com {
   reverse_proxy app:8080
 }
 ```
+<VClickList>
 
 - It's telling caddy "look, when requests come for that domain, send them to app on port 8080". Very simple and effective.
 - As a good side effect, caddy will automatically register a certificate for this domain, and enable https!
+
+</VClickList>
 
 ---
 layout: center
