@@ -189,10 +189,9 @@ mdc: true
 </VClickList>
 
 ---
-layout: center
-transition: view-transition
-mdc: true
+transition: slide-up
 ---
+
 # Topics Not Covered {.inline-block.view-transition-title}
 <VClickList>
 
@@ -203,3 +202,16 @@ mdc: true
   *Deep dives into container networking, network policies, and other advanced security configurations.*
 
 </VClickList>
+
+---
+layout: center
+transition: slide-up
+class: text-center
+---
+
+# Thank you!
+### Q&A?
+
+--
+#### joaoanes@mindera.com
+#### hi@joaoanes.website
